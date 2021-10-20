@@ -26,7 +26,7 @@ More help?
 ```
 
 ## File formats? 
-Stegreg now is supporting these format :
+Stegreg now is supporting these file formats :
 
 File type     | Short description                                                            | 
 ------------- | ---------------------------------------------------------------------------- |
@@ -38,4 +38,6 @@ Image(png)    | png images are really sensitive, data will be hidden in the end 
 
 
 ## Issues
-Bug reports are welcome! Please report all bugs on the issue tracker or send them to devalfo@protonmail.com. Thank you.
+Bug reports are welcome! Please report all bugs on the issue tracker or send them to devalfo@protonmail.com. 
+
+Thank you.
