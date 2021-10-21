@@ -34,5 +34,11 @@ obj/blowfish.o : lib/Blowfish/blowfish.cpp
 obj/md5.o : lib/Md5/MD5.cpp
 	$(CC) -Wall -g -c lib/Md5/MD5.cpp -o obj/md5.o
 
+install : stegreg
+	sudo cp stegreg /usr/local/bin
+
+uninstall: 
+	sudo rm /usr/local/bin/stegreg
+
 clean : 
 	rm obj/*.o 
