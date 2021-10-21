@@ -41,7 +41,7 @@ struct c_infos{
 void pngembed(char* coverfile, char* embedingfile, char* passphrase, char* outputfile, bool encyrption){
     // output check
     if(outputfile == NULL){
-        outputfile = "output" ;
+        outputfile = "output.png" ;
     }
     char signature[14] = "please myself";
     struct c_infos file ;
