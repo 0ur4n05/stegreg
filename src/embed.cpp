@@ -6,9 +6,10 @@
 #include <vector>
 #include <time.h>
 #include "../lib/Md5/MD5.h"
-#include "../includes/embed.hpp"
 #include "../includes/encrypt.hpp"
 #include "../includes/general.hpp"
+#include "../includes/png.hpp"
+
 
 
 // take a look at extract.cpp to understand this
@@ -24,7 +25,7 @@ struct s_header{
     char s_hash[33];    // embededfile md5 hash
 };
 
-void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfile, bool encrption){
+void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfile, bool encryption){
     srand (time(NULL));
 // some checks before the embeding 
     // getting the size of the file
@@ -40,6 +41,11 @@ void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfi
     // checking the output option 
     if(outputfile == NULL){
         outputfile = "output" ;
+    }
+    // checking the magic bytes of the file
+    bool is = is_png(coverfile);
+    if(is == 1){
+        pngembed(coverfile,embedingfile,passphrase,outputfile,encryption);
     }
     // encrypting the embedding file 
     unsigned char *encrypted_text = encrypt(embedingfile, passphrase);
@@ -68,14 +74,17 @@ void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfi
     // reading these header maybe will crash when using bigest files "more than 65535" so this is temporarely until i change it
     // a loop to write bytes to the file
     while(i < 7){
-        if(s_array[i] < 15){
+        if(s_array[i] < 9){
             string_cover_content.insert(f , std::to_string(s_array[i]) + "xxx");
-        }else if(s_array[i] < 255){
+        }else if(s_array[i] < 99){
             string_cover_content.insert(f , std::to_string(s_array[i]) + "xx");     // the x appended to the file are used to make every int take 4 bytes, i thought adding null bytes would be better but null bytes are used as string terminators, x's are used temporarily until i find a better solution 
-        }else if(s_array[i] < 4095){
+        }else if(s_array[i] < 999){
             string_cover_content.insert(f , std::to_string(s_array[i]) + "x");
-        }else if(s_array[i] < 65535){
+        }else if(s_array[i] < 9999){
             string_cover_content.insert(f , std::to_string(s_array[i]));
+        }else{
+            std::cout << "File is too big" << std::endl ;
+            exit(0);
         }
         i++;
         f = f + 4 ;

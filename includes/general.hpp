@@ -4,5 +4,6 @@
 int filesize(char* filename);
 char* spliter(unsigned char *encrypted, int offset, int bytes);
 void removeChar(char *str, char garbage);
+bool is_png(char *filename);
 
 #endif

@@ -7,6 +7,7 @@ Stegreg is a steganography tool made in C++ that encrypt and hide your data insi
 ```
 git clone https://github.com/0UR4N05/stegreg.git
 cd stegreg/
+make
 make install
 ```
 

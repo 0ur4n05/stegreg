@@ -4,6 +4,8 @@
 #include "../includes/extract.hpp"
 #include "../includes/decrypt.hpp"
 #include "../includes/general.hpp"
+#include "../includes/png.hpp"
+
 
 
 /*
@@ -41,7 +43,11 @@ struct s_header{
 void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption){
     // checking if the output is null
     if(outputfile == NULL){
-        outputfile = "output";
+        outputfile = "extracted_data";
+    }
+    bool is = is_png(stegfile);
+    if(is == 1){
+        pngextract(stegfile,passphrase,outputfile,encryption);
     }
     // starting to read the header and extracting values from it
     int storage[7] ;                // an array that will store all the file header
@@ -72,8 +78,6 @@ void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption
     steg.seekg(header.s_hash_offset);
     steg.read(header.s_hash, 32) ;       // reading it directly into the header var from the struct some junk bytes to apear 
     header.s_hash[32] = '\0';
-    std::cout << header.s_hash << std::endl ;
-
     //closing the file 
     steg.close();
 }

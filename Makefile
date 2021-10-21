@@ -1,6 +1,6 @@
 CC=g++
 
-stegreg : obj/main.o obj/extract.o obj/embed.o obj/blowfish.o obj/encrypt.o obj/check.o obj/general.o obj/decrypt.o obj/md5.o
+stegreg : obj/main.o obj/extract.o obj/embed.o obj/blowfish.o obj/encrypt.o obj/check.o obj/general.o obj/decrypt.o obj/md5.o obj/png.o
 	$(CC) obj/* -o stegreg -lm
 
 obj/main.o : src/main.cpp
@@ -23,6 +23,9 @@ obj/general.o : src/general.cpp
 
 obj/decrypt.o : src/decrypt.cpp
 	$(CC) -Wall -g -c src/decrypt.cpp -o obj/decrypt.o
+
+obj/png.o : src/png.cpp
+	$(CC) -Wall -g -c src/png.cpp -o obj/png.o
 
 # blowfish library
 obj/blowfish.o : lib/Blowfish/blowfish.cpp

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string.h>
+#include <fstream>
 // this file contain general fucntion used in this program to prevent repetition 
 
 int filesize(char* filename){
@@ -32,4 +34,22 @@ void removeChar(char *str, char garbage){
         if (*dst != garbage) dst++;
     }
     *dst = '\0';
+}
+
+bool is_png(char *filename){
+    // opening the file
+    char png_magic_bytes[9] = "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A";
+    char file_magic_bytes[9] ;
+    std::ifstream file;
+    file.open(filename);
+    // reading the bytes
+    file.seekg(0);
+    file.read(file_magic_bytes,8);
+    // comparing 
+    if(memcmp(png_magic_bytes,file_magic_bytes,8)){
+        return 0 ;          // false
+    }else{
+        return 1 ;          // true
+    }
+    return 1;
 }

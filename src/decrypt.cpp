@@ -27,6 +27,5 @@ unsigned char *decrypt(char* encyrpted_text, char *passphrase){
     blowfish.SetKey(unsigned_key,sizeof(unsigned_key));
     blowfish.Decrypt(unsigned_content,unsigned_content,sizeof(unsigned_content));
     unsigned char* unsig_content = unsigned_content ;
-    std::cout << unsig_content << std::endl;
     return unsig_content ;
 }
