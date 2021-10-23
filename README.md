@@ -25,6 +25,8 @@ More help?
 ```
     ./stegreg -h
 ```
+## Quick note 
+The tool may damage jpg files.
 
 ## File formats? 
 Stegreg now is supporting these file formats :
