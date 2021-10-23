@@ -140,4 +140,5 @@ void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfi
     output << string_cover_content ;
     output.close();
     emfileh.close();
+    std::cout << "Embedding done successfully" std::endl ;
 }
