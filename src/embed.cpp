@@ -118,12 +118,23 @@ void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfi
                   << "offset to write " << header.s_offset << std::endl 
                   << "part " << header.s_nparts << std::endl ;*/
         header.s_offset += header.s_shift + header.s_sizec ;
-        char *splitted = spliter(encrypted_text,data_written,header.s_sizec);
-        string_cover_content.insert(header.s_offset , splitted); 
-        std::cout << splitted << std::endl;
+        // storing the splitted part in a string 
+        std::string splitted = spliter(encrypted_text,data_written,header.s_sizec);
+        // converting from a string to char pointer 
+        char splitted_container[splitted.length() + 10];
+        strcpy(splitted_container,splitted.c_str());
+        string_cover_content.insert(header.s_offset , splitted_container); 
         data_written += header.s_sizec  ;
         header.s_nparts-- ;
     }
+    // writing the last part of the encrypted text
+    std::string splitted = spliter(encrypted_text,data_written,header.s_lsize);
+    char split_cont[splitted.length() + 10];
+    strcpy(split_cont,splitted.c_str());
+    // establishing the shift
+    header.s_offset += header.s_shift + header.s_sizec ;
+    // writing to the variable 
+    string_cover_content.insert(header.s_offset , split_cont);
     // writing to the output file and closing the other files
     std::ofstream output(outputfile);
     output << string_cover_content ;
