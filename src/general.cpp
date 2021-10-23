@@ -16,7 +16,7 @@ int filesize(char* filename){
     return filesize ;
 }
 // get the encrypted_text a
-char* spliter(unsigned char *encrypted, int offset, int bytes){
+std::string spliter(unsigned char *encrypted, int offset, int bytes){
     char list_cutting[bytes+1] = {0} ;              // this where the encryted text will get stored 
     int i  = 0;                                         // simple iterator 
     while(i < bytes){
@@ -24,7 +24,8 @@ char* spliter(unsigned char *encrypted, int offset, int bytes){
         i++;
         offset++;
     }
-    char *r = list_cutting ;
+    char *p = list_cutting;
+    std::string r(p) ;
     return r;
 }
 void removeChar(char *str, char garbage){

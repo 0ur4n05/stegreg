@@ -85,7 +85,9 @@ void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption
     while(i < header.s_nparts){
         steg.seekg(header.s_offset);
         steg.read(container, header.s_sizec) ;
+        header.s_offset += header.s_shift + header.s_sizec ;
         i++;
+        std::cout << header.s_sizec ;
     }
     // decrypting the data extracted
     char *con = container ;
