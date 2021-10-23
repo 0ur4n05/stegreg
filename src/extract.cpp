@@ -31,8 +31,8 @@ This is how an extraction work :
 
 struct s_header{
     int s_offset;       // where the first part of the file start
-    int s_sizec;        // the size of every chunk of hidden data
     int s_sizef;        // size of the embeded file
+    int s_sizec;        // the size of every chunk of hidden data
     int s_nparts;       // number of hidden parts
     int s_shift;        // the size of the data between every hidden data
     int s_lsize;        // the size of the last part of hidden data
@@ -68,8 +68,8 @@ void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption
     // assgning the values readed to the struct
     struct s_header header ;
     header.s_offset = storage[0];
-    header.s_sizec = storage[1] ; 
-    header.s_sizef = storage[2] ;
+    header.s_sizef = storage[1] ; 
+    header.s_sizec = storage[2] ;
     header.s_nparts = storage[3] ; 
     header.s_shift = storage[4] ; 
     header.s_lsize = storage[5] ;
@@ -78,6 +78,23 @@ void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption
     steg.seekg(header.s_hash_offset);
     steg.read(header.s_hash, 32) ;       // reading it directly into the header var from the struct some junk bytes to apear 
     header.s_hash[32] = '\0';
+    // start reading the hidden data 
+    i = 0 ; 
+    // reading the bytes
+    char container[header.s_sizef + 10];
+    while(i < header.s_nparts){
+        steg.seekg(header.s_offset);
+        steg.read(container, header.s_sizec) ;
+        i++;
+    }
+    // decrypting the data extracted
+    char *con = container ;
+    unsigned char* unsig_container = decrypt(con, passphrase);
+    // storing it into a file 
+    FILE *output;
+    output = fopen(outputfile, "w");
+    fprintf(output,"%s",unsig_container);
     //closing the file 
+    fclose(output);
     steg.close();
 }

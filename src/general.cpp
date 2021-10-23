@@ -24,8 +24,8 @@ char* spliter(unsigned char *encrypted, int offset, int bytes){
         i++;
         offset++;
     }
-    char *result = list_cutting ;
-    return result;
+    char *r = list_cutting ;
+    return r;
 }
 void removeChar(char *str, char garbage){
     char *src, *dst;
@@ -52,4 +52,13 @@ bool is_png(char *filename){
         return 1 ;          // true
     }
     return 1;
+}
+// checks if the file given exists
+void exist(char *filename){
+    FILE *file;
+    file = fopen(filename ,"r");
+    if(!file){
+        std::cout << "File doesn't exist"<< std::endl;
+        exit(0);
+    }
 }
