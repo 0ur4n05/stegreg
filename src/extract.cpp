@@ -5,8 +5,7 @@
 #include "../includes/decrypt.hpp"
 #include "../includes/general.hpp"
 #include "../includes/png.hpp"
-
-
+#include "../lib/Md5/MD5.h"
 
 /*
 This is how an extraction work :
@@ -81,22 +80,43 @@ void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption
     // start reading the hidden data 
     i = 0 ; 
     // reading the bytes
-    char container[header.s_sizef + 10];
+
+    std::string container;
+    char containerd[header.s_sizec + 10];
     while(i < header.s_nparts){
         steg.seekg(header.s_offset);
-        steg.read(container, header.s_sizec) ;
+        steg.read(containerd, header.s_sizec) ;
         header.s_offset += header.s_shift + header.s_sizec ;
+        containerd[header.s_sizec] = '\0' ;
+        std::string p(containerd);
+        container += p ;
         i++;
-        std::cout << header.s_sizec ;
     }
+    // getting the header.s_lsize(last part)
+    char l_container[header.s_lsize + 10];
+        // setting the right offset 
+    int pp = header.s_offset + header.s_shift + header.s_sizec ;
+    steg.seekg(header.s_offset);
+    steg.read(l_container, header.s_lsize) ;
+    std::string d(l_container);
+    container += d ; 
+    char encrypted_text[container.length() + 10];
+    strcpy(encrypted_text, container.c_str());
+    encrypted_text[header.s_sizef] = '\0';
+    std::cout << encrypted_text;
     // decrypting the data extracted
-    char *con = container ;
+    char *con = encrypted_text ;
     unsigned char* unsig_container = decrypt(con, passphrase);
     // storing it into a file 
     FILE *output;
     output = fopen(outputfile, "w");
     fprintf(output,"%s",unsig_container);
+    // checking the md5 hash
+        // hashing the content 
+    std::string content((char *) unsig_container);
+    std::string md5filehash = md5(content);
     //closing the file 
     fclose(output);
     steg.close();
+    std::cout << "Extraction done successfully\nData saved in " << outputfile << std::endl ;
 }
