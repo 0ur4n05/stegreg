@@ -78,13 +78,13 @@ void embed(char* coverfile, char* embedingfile, char* passphrase, char* outputfi
     // when reading the header using extract.cpp the x added here will be removed and the strings will be converted to ints to get the right values
     // reading these header maybe will crash when using bigest files "more than 9999" so this is temporarely until i change it
     while(i < 7){
-        if(s_array[i] < 9){
+        if(s_array[i] <= 9){
             string_cover_content.insert(f , std::to_string(s_array[i]) + "xxx");
-        }else if(s_array[i] < 99){
+        }else if(s_array[i] <= 99){
             string_cover_content.insert(f , std::to_string(s_array[i]) + "xx");     // the x appended to the file are used to make every int take 4 bytes, i thought adding null bytes would be better but null bytes are used as string terminators, x's are used temporarily until i find a better solution 
-        }else if(s_array[i] < 999){
+        }else if(s_array[i] <= 999){
             string_cover_content.insert(f , std::to_string(s_array[i]) + "x");
-        }else if(s_array[i] < 9999){
+        }else if(s_array[i] <= 9999){
             string_cover_content.insert(f , std::to_string(s_array[i]));
         }
         i++;

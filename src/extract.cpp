@@ -102,11 +102,11 @@ void extract(char* stegfile, char* passphrase, char* outputfile, bool encryption
     container += d ; 
     char encrypted_text[container.length() + 10];
     strcpy(encrypted_text, container.c_str());
-    encrypted_text[header.s_sizef] = '\0';
-    std::cout << encrypted_text;
+    encrypted_text[header.s_sizef +1] = '\0';
     // decrypting the data extracted
     char *con = encrypted_text ;
     unsigned char* unsig_container = decrypt(con, passphrase);
+    std::cout << unsig_container;
     // storing it into a file 
     FILE *output;
     output = fopen(outputfile, "w");

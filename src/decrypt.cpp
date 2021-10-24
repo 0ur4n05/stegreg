@@ -2,7 +2,7 @@
 #include "../lib/Blowfish/blowfish.h"
 #include <string.h>
 
-unsigned char *decrypt(char* encyrpted_text, char *passphrase){ 
+unsigned char *decrypt(char* encrypted_text, char *passphrase){ 
     if(passphrase == NULL){
         passphrase = "mypassphrase";
     }else{  
@@ -11,12 +11,11 @@ unsigned char *decrypt(char* encyrpted_text, char *passphrase){
             exit(0);
         }
     }
-    unsigned char unsigned_content[strlen(encyrpted_text) + 5] = {0} ; 
+
+    unsigned char unsigned_content[strlen(encrypted_text) + 5] = {0} ; 
     int i = 0 ;
-    while(i < strlen(encyrpted_text)){
-        unsigned_content[i] = encyrpted_text[i];
-        i++;
-    }
+    strncpy((char *)unsigned_content, encrypted_text, strlen(encrypted_text));
+// converting to unsigned keys
     i = 0;
     unsigned char unsigned_key[strlen(passphrase) + 5] = {0} ; 
     while(i < strlen(passphrase)){
