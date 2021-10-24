@@ -1,7 +1,9 @@
 CC=g++
 
-stegreg : obj/main.o obj/extract.o obj/embed.o obj/blowfish.o obj/encrypt.o obj/check.o obj/general.o obj/decrypt.o obj/md5.o obj/png.o
+stegreg : obj/ obj/main.o obj/extract.o obj/embed.o obj/blowfish.o obj/encrypt.o obj/check.o obj/general.o obj/decrypt.o obj/md5.o obj/png.o
 	$(CC) obj/* -o stegreg -lm
+obj/ :
+	mkdir obj
 
 obj/main.o : src/main.cpp
 	$(CC) -Wall -g -c src/main.cpp -o obj/main.o
@@ -33,6 +35,7 @@ obj/blowfish.o : lib/Blowfish/blowfish.cpp
 # md5 lib
 obj/md5.o : lib/Md5/MD5.cpp
 	$(CC) -Wall -g -c lib/Md5/MD5.cpp -o obj/md5.o
+
 
 install : stegreg
 	sudo cp stegreg /usr/local/bin
